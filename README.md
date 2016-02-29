@@ -1,4 +1,3 @@
-# ESD.P
 echo "# ESD.P" >> README.md
 git init
 git add README.md
