@@ -73,21 +73,27 @@ public class Bluetooth{
     static Vector remoteDiscovery() {
         Vector devicesDiscovered = new Vector();
         RemoteDevice rd;
-        int i= 0;
+        int i= 0,j = -1;
+        String floorLamp = "";//                                    awersome!
         RemoteDeviceDiscoveryR rdd = new RemoteDeviceDiscoveryR();
         devicesDiscovered = rdd.getRemoteDevices();
         while (i < devicesDiscovered.size()) {
             rd = (RemoteDevice) devicesDiscovered.get(i);
             try {
                 System.out.println(i + ".. " + rd.getFriendlyName(false) + "\t\t -- \t" + rd.getBluetoothAddress());
+                floorLamp = rd.getBluetoothAddress();
+                 if (floorLamp.equals("00066608BB6A")) 
+                    j = i;
             }
             catch (IOException ioe) {
             }
+            
             i++;
         }
-        System.out.print("Enter device number to search service on:- ");
-        i = Integer.parseInt(readKBInput());
-        ServiceSearcherR ss = new ServiceSearcherR((RemoteDevice) devicesDiscovered.get(i));
+        //System.out.print("Enter device number to search service on:- ");
+        //i = Integer.parseInt(readKBInput());
+        ServiceSearcherR ss = new ServiceSearcherR((RemoteDevice) devicesDiscovered.get(j));
+        //ServiceSearcherR ss2 = new ServiceSearcherR((RemoteDevice) devicesDiscovered.get(1));
         System.out.println("== BACK FROM REMOTE DICOVERY:: " + devicesDiscovered.size() + " devices detected. \n");
         return ss.getServices();
     }
